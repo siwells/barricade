@@ -172,7 +172,7 @@
                 
             }
             ctx.fill();
-//ctx.fillText("hello", 25, 25);
+
             if(nodelabel)
             {
                 var wdt = ctx.measureText(node.data.label);
@@ -188,7 +188,7 @@
                 ctx.fillStyle = "black"
                 ctx.fillText(label, pt.x+radius, pt.y+radius);
             }
-//            ctx.fill();
+
             ctx.stroke();
   
         })    			
@@ -203,7 +203,7 @@
         // for moves and mouseups while dragging
         var handler = {
 
-            over:function(e){
+        over:function(e){
                 var pos = $(canvas).offset();
                 _mouseP = arbor.Point(e.pageX-pos.left, e.pageY-pos.top)
                 dragged = particleSystem.nearest(_mouseP);
@@ -228,7 +228,7 @@
 //                document.getElementById("arg_content").innerHTML=dragged.node.data.content
 //                document.getElementById("arg_content").style.background ='#00ff00';
                 document.getElementById("concl").innerHTML=dragged.node.data.content
-                
+
                 return false
             },
 
@@ -288,7 +288,8 @@
 
   $(document).ready(function(){
 
-    var sys = arbor.ParticleSystem(500, 150, 0.75) // create the system with sensible repulsion/stiffness/friction
+    var sys = arbor.ParticleSystem(800, 800, 0.75) // create the system with sensible repulsion/stiffness/friction
+
     sys.parameters({gravity:true}) // use center-gravity to make the graph settle nicely (ymmv)
     sys.renderer = Renderer("#viewport") // our newly created renderer will have its .init() method called shortly by sys...
 
@@ -299,12 +300,12 @@
     sys.addNode('d', {"type":"premise", "label":"P2", "content":"prem 2", alone:true, mass:.25})
     sys.addNode('e', {"type":"premise", "label":"P3", "content":"prem 3", alone:true, mass:.25})
 
-    sys.addNode('B_C', {"type":"conclusion", "label":"P3", "content":"prem 3", alone:true, mass:.25})
-    sys.addNode('B_S', {"type":"scheme", "label":"S2", "content":"Scheme 2", alone:true, mass:.25})
+    sys.addNode('B_C', {"type":"conclusion", "label":"P3", "content":"prem 3", alone:true, mass:.95})
+    sys.addNode('B_S', {"type":"scheme", "label":"S2", "content":"Scheme 2", alone:true, mass:.95})
     sys.addNode('B_P1', {"type":"premise", "label":"P3", "content":"prem 3", alone:true, mass:.25})
     sys.addNode('B_P2', {"type":"premise", "label":"P3", "content":"prem 3", alone:true, mass:.25})
 
-    sys.addNode('C_S', {"type":"scheme", "label":"S3", "content":"scheme 3", alone:true, mass:.25})
+    sys.addNode('C_S', {"type":"scheme", "label":"S3", "content":"scheme 3", alone:true, mass:.95})
 
     sys.addEdge('b','a')
     sys.addEdge('c','b')
