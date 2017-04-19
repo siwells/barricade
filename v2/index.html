@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+    body { background-color: rgb(248, 248, 248) }
+
+</style>
+<body>
+<script src="lib/d3.v3.js"></script>
+<script>
+
+d3.json("graph.json", function(graph)
+{
+    var width = 640,
+        height = 480;
+
+    var keypress = null;
+
+    var svg = d3.select("body")
+        .on("keydown", togglekeys)
+        .append("svg")
+            .style("margin-left", "auto")
+            .style("margin-right", "auto")
+            .style("display", "block")
+            .attr("width", "100%")//width)
+            .attr("height", height);
+
+    var force = d3.layout.force()
+//        .gravity(0.2)
+        .charge(-500)
+        .friction(0.8)
+        .linkStrength(0.5)
+        .size([width, height])
+        .linkDistance(60);
+
+
+    var drag = force.drag()
+
+    force.nodes(graph.nodes)
+        .links(graph.edges)
+        .on("tick", tick)
+        .start();
+
+    svg.append("defs").selectAll("marker")
+        .data(["end"])
+        .enter().append("marker")
+            .attr("id", function(d) { return d; })
+            .attr("viewBox", "0 -5 10 10")
+            .attr("refX", 25)
+            .attr("refY", 0)
+            .attr("markerWidth", 6)
+            .attr("markerHeight", 6)
+            .attr("orient", "auto")
+            .append("path")
+                .attr("d", "M0,-5L10,0L0,5")
+                .style("stroke", "#4679BD")
+                .style("opacity", "0.6");
+
+    var link = svg.selectAll(".link")
+        .data(graph.edges)
+        .enter().append("line")
+            .attr("class", "link")
+            .style("stroke", "#999")
+            .style("stroke-opacity", ".6")
+            .style("marker-end",  "url(#end)");
+
+    var node = svg.selectAll(".node")
+        .data(graph.nodes)
+        .enter().append("g")
+        .attr("class", "node")
+        .on("click", click)
+        .on("dblclick", dblclick)
+        .call(force.drag);
+
+    node.append("circle")
+        .attr("r", 8)
+        .style("cursor", "move")
+        .style("stroke", "#000")
+        .style("fill", function(d) {return getcolour(d) });
+        
+    node.append("text")
+        .attr("x", 12)
+        .attr("dy", ".35em")
+        .style("stroke", "#636363") 
+        .style("font", "8px")
+        .style("pointer-events", "none")
+        .text(function(d) {return d.content; });
+
+    node.append("title").text(function(d) {return d.type; });
+
+    function click(d)
+    {
+        if (keypress != null)
+        {
+            if (keypress.keyCode == 70) // f for fixed
+            {
+                d3.select(this).classed("fixed", d.fixed = true);
+            }
+            else if (keypress.keyCode == 83) // s for scale
+            {
+                d3.select(this).select("circle").transition()
+                .duration(750)
+                .attr("r", 20)
+            }
+            else if (keypress.keyCode == 84) // t for text
+            {
+                d3.select(this).select("text")
+                .text("");
+            }
+        }
+    }
+
+    function dblclick(d)
+    {
+        if (keypress != null)
+        {
+            if (keypress.keyCode == 70) // f for fixed
+            {
+                d3.select(this).classed("fixed", d.fixed = false);
+            }
+            else if (keypress.keyCode == 83) // s for scale
+            {
+                d3.select(this).select("circle").transition()
+                    .duration(750)
+                .attr("r", 8)
+            }
+            else if (keypress.keyCode == 84) // t for text
+            {
+                d3.select(this).select("text")
+                .text(function(d) {return d.content; });
+            }
+
+        }
+    }
+
+    function getcolour(d)
+    {
+        if (d.type == "info")
+        {   
+            return "#aec7e8";
+        }
+        else if (d.type == "scheme_instantiation_rule_application")
+        {
+            return "green";
+        }
+        else if (d.type == "scheme_instantiation_conflict_application")
+        {
+            return "red";
+        }
+        else if (d.type == "scheme_archetype")
+        {
+            return "grey";
+        }
+        else
+        {
+            return "#1f77b4";
+        }
+    }
+
+    function togglekeys()
+    {
+        if (d3.event.keyCode == 27)
+        {
+            keypress = null;   
+        }
+        else
+        {
+            keypress = d3.event;
+        }
+        //console.log(keypress);
+    }
+
+    function tick()
+    {
+        link.attr("x1", function(d) { return d.source.x; })
+            .attr("y1", function(d) { return d.source.y; })
+            .attr("x2", function(d) { return d.target.x; })
+            .attr("y2", function(d) { return d.target.y; });
+        node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+        //node.attr("cx", function(d) { return d.x; })
+        //  .attr("cy", function(d) { return d.y; });
+    }
+
+     
+    });
+
+
+</script>
+</body>
+</html>
+

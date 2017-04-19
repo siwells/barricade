@@ -1,0 +1,43 @@
+{
+    "directed": true, 
+    "graph": [
+        [
+            "name", 
+            "Arguments"
+        ]
+    ],
+    "nodes": [
+        {
+            "content": "a",
+            "type": "scheme_instantiation_conflict_application",
+            "id": "0"
+        },
+        {
+            "content": "b",
+            "type": "info",
+            "id": "1"
+        },
+        {
+            "content": "c",
+            "type": "scheme_instantiation_conflict_application",
+            "id": "2"
+        },
+        {
+            "content": "d",
+            "type": "scheme_instantiation_rule_application",
+            "id": "3"
+        },
+        {
+            "content": "e",
+            "type": "saaacheme_instantiation_conflict_application",
+            "id": "4"
+        }
+    ],
+    "edges": [
+        {"source": 0, "target": 1},
+        {"source": 1, "target": 2},
+        {"source": 2, "target": 3},
+        {"source": 3, "target": 0},
+        {"source": 2, "target": 4}
+    ]
+}
