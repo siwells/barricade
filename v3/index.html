@@ -1,0 +1,388 @@
+<!doctype html>
+<!--[if IE 8]><html class="ie8 lt-ie10"><![endif]-->
+<!--[if IE 9]><html class="ie9 lt-ie10"><![endif]-->
+<!--[if gt IE 9]><!--><html lang="en"><!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="cleartype" content="on">
+    <meta name="MobileOptimized" content="320">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <title>Argument Structure Vizuifier</title>
+
+
+    <style>
+    html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0 auto;
+        font: 100%/1.4em 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        color: #222;
+        -webkit-text-size-adjust: none;
+        -webkit-font-smoothing: antialiased;
+    }
+    body, .panel { background-color: #fff; }
+    .menu {
+        background-color: #1D1F20;
+        background-image: linear-gradient(145deg, #1D1F20, #404348);
+    }
+    .panel {
+        min-height: 100%;
+    }
+    a {
+        color: #fff;
+        text-decoration: none;
+    }
+    .menu a { color: #fff; }
+    .menu a:hover { text-decoration: underline; }
+    .menu-header {
+        border-bottom: 1px solid #2a2d2f;
+        padding: 20px;
+        background-size: 32px;
+    }
+    .menu-header-title {
+        font-weight: 400;
+        letter-spacing: 0.5px;
+        margin: 0;
+    }
+    .menu-section { margin: 25px 0; }
+
+    .menu-section-title {
+        text-transform: uppercase;
+        color: #85888d;
+        font-weight: 200;
+        font-size: 13px;
+        letter-spacing: 1px;
+        padding: 0 20px;
+        margin:0;
+    }
+
+    .menu-section-list {
+        padding:0;
+        margin: 10px 0;
+        list-style:none;
+    }
+
+    .menu-section-list a {
+        display: block;
+        padding: 10px 20px;
+    }
+    .slideout-menu {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 0;
+        width: 256px;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        display: none;
+    }
+    .slideout-panel {
+        position:relative;
+        z-index: 1;
+        will-change: transform;
+    }
+    .slideout-open,
+    .slideout-open body,
+    .slideout-open .slideout-panel {  }
+    .slideout-open .slideout-menu { display: block; }
+    .btn-hamburger {
+        border: none;
+        position: absolute;
+        top: 5px;
+        left: auto;
+        right: 5px;
+        outline:none;
+        background: url('assets/menu_tr.png') no-repeat center;
+        width: 50px;
+        height: 50px;
+        z-index:1;
+    }
+    .slideout-menu { left: auto}
+    .ui-dialog { z-index: 101 !important; }
+
+    #wrapper { min-height: 100%; }
+    #cy {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+    }
+    </style>
+    
+    </head>
+
+    <body>
+    <nav id="menu" class="menu">
+    <a href="#" target="_blank">
+        <header class="menu-header">
+          <span class="menu-header-title">Argument Structure Vizuifier</span>
+        </header>
+    </a>
+
+    <section class="menu-section">
+        <h3 class="menu-section-title">Import</h3>
+        <ul class="menu-section-list">            
+            <a href="" id="a"><button onclick="download('The JSON file containing the analysed argument', 'analysis.json', 'text/plain')">Load from JSON</button></a>
+      </ul>
+      </section>
+
+      
+    <section class="menu-section">
+        <h3 class="menu-section-title">Export</h3>
+        <ul class="menu-section-list">            
+            <a href="" id="a"><button onclick="download('The JSON file containing the analysed argument', 'analysis.json', 'text/plain')">Save to JSON</button></a>
+        </ul>
+    </section>
+
+    <section class="menu-section">
+        <h3 class="menu-section-title">Documentation</h3>
+        <ul class="menu-section-list">            
+            <a href="" id="a">About</a>
+            <a href="" id="a">Quick-start</a>
+            <a href="" id="a">API</a>
+            <a href="" id="a">Licensing</a>
+      </ul>
+      </section>
+
+
+       
+
+    </nav>
+
+    <main id="panel" class="panel">
+    <div id="wrapper">
+
+    
+        
+        <div id="navbar"><button class="btn-hamburger toggle-button"></button></div>
+       
+        <div id="cy"></div>
+
+            
+    </div>
+    </main>
+
+    <div class="modal fade" id="newAtomModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">New Atom</h4>
+            </div>
+            <div class="modal-body">
+                <p>Add some content to the new atom</p>
+                 <div class="form-group">
+                    <textarea class="form-control" rows="2" id="content"></textarea>
+                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="newSchemeModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">New Scheme</h4>
+            </div>
+            <div class="modal-body">
+                <p>Select a scheme</p>
+                <select class="form-control" id="sel1">
+                    <option>Default Support</option>
+                    <option>Default Conflict</option>
+                    <option>Argument from Expert Opinion</option>
+                    <option>Causal Slippery Slope Argument</option>
+                    <option>Argument from Sign</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="add_new_scheme()">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    <script src="lib/slideout.js"></script>
+    <script src='lib/cytoscape.js'></script>
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/bootstrap.min.js"></script>
+    <script>
+
+        var options = {
+        name: 'cose',
+
+        fit: true,
+        padding: 30, 
+        boundingBox: undefined, 
+//        sweep: undefined, 
+//        clockwise: true, 
+//        sort: undefined, 
+//        animate: false, 
+//        animationDuration: 500, 
+//        animationEasing: undefined, 
+//        ready: undefined, 
+//        stop: undefined
+
+     };
+
+        var cy = cytoscape({
+    container: document.getElementById('cy'),
+    elements:[
+    
+        { data: { id: 'a1', content: 'Every person is going to die', type: 'atom', typeshape: 'roundrectangle' } },
+        { data: { id: 'a2', content: 'You are a person', type: 'atom', typeshape: 'roundrectangle' } },
+        { data: { id: 'a3', content: 'If you are going to die then you should treasure every moment', type: 'atom', typeshape: 'roundrectangle' } },
+        { data: { id: 'a4', content: 'You are going to die', type: 'atom', typeshape: 'roundrectangle' } },
+        { data: { id: 'a5', content: 'You should treasure every moment', type: 'atom', typeshape: 'roundrectangle' } },
+
+        { data: { id: 's1', content: 'Default Support', type: 'scheme', typeshape: 'diamond'  } },
+        { data: { id: 's2', content: 'Default Support', type: 'scheme', typeshape: 'diamond'  } },
+        { data: { id: 's3', content: 'Default Support', type: 'scheme', typeshape: 'diamond'  } },
+
+
+        { data: { id: 'a1s1', source: 'a1', target: 's1' } },
+        { data: { id: 'a2s1', source: 'a2', target: 's1' } },
+        { data: { id: 'a3s3', source: 'a3', target: 's3' } },
+        { data: { id: 's3a5', source: 's3', target: 'a5' } },
+        { data: { id: 's1a4', source: 's1', target: 'a4' } },
+        { data: { id: 'a4s2', source: 'a4', target: 's2' } },
+        { data: { id: 's2a5', source: 's2', target: 'a5' } }
+
+        ],
+    style:[
+        { selector: 'node', style: { 
+            'content': 'data(content)', 
+            'text-opacity': 0.5, 
+            'text-valign': 'center', 
+            'text-halign': 'center', 
+            'shape':'data(typeshape)'
+            }
+        },
+        { selector: 'edge', style: { 
+            'line-color': '#9dbaea',
+            'target-arrow-shape': 'triangle',
+            'target-arrow-color': '#9dbaea', 
+            'curve-style': 'bezier' 
+            }
+        },
+        { selector: ':selected', style: {
+            'border-width':'3',
+            'broder-color':'#333'
+            }
+        }        
+        ]
+    });
+
+    var selected = [];
+    var position = null;
+
+    cy.on('cxttap', function (e)
+    { 
+        var rp = e.cyRenderedPosition
+        var new_content = prompt("Add some content for this node", "");
+
+        cy.add([
+            {group: "nodes", data: {id: Math.floor(Math.random() * 1024).toString(), 
+                content: new_content, typeshape: 'roundrectangle' }, renderedPosition: rp},
+        ]);
+
+    });
+
+    cy.on('taphold', function (e)
+    { 
+        position = e.cyRenderedPosition;
+        document.getElementById("sel1").options.selectedIndex=0;
+        $('#newSchemeModal').modal('show');
+    });
+
+
+    cy.on('select', 'node', function (e)
+    {
+        selected.push(this.id());
+        console.log(selected);
+        if(selected.length == 2)
+        {
+            console.log(selected.length)
+            cy.add([
+                {group: "edges", data: {id: selected[0]+selected[1], source: selected[0], target: selected[1]}},
+            ]);
+            var s1 = cy.getElementById(selected[0]);
+            console.log(s1.selected());
+            var a = cy.getElementById('a');
+            console.log(a.selected());
+            selected = [];
+        }
+    });
+
+    cy.on('unselect', 'node', function (e)
+    {
+        selected.pop(this.id());
+        console.log(selected);
+    });
+
+    cy.on('tap', 'node', function (e)
+    { 
+    });
+
+    cy.layout( options);
+
+    $('.modal').on('hidden.bs.modal', function(e)
+    { 
+    });
+
+    function add_new_scheme()
+    {
+        var scheme_idx = document.getElementById("sel1").options.selectedIndex;
+        var scheme = document.getElementById("sel1").options[scheme_idx].text;
+        cy.add([
+            {group: "nodes", data: {id: Math.floor(Math.random() * 1024).toString(), 
+                content: scheme, typeshape: 'diamond' }, renderedPosition: position},
+        ]);
+    };
+
+        var slideout = new Slideout( {
+            'panel': document.getElementById('panel'),
+            'menu': document.getElementById('menu'),
+            'fx': 'ease',
+            'side': 'right',
+            'duration': 500,
+            'padding': 256,
+            'tolerance': 70
+        });
+
+
+        window.onload = function() {
+            document.querySelector('.toggle-button').addEventListener('click', function() {
+                slideout.toggle();
+            });
+
+            document.querySelector('.menu').addEventListener('click', function(eve) {
+                if (eve.target.nodeName === 'A') { slideout.close(); }
+            });
+        };
+
+        function download(text, name, type) {
+            var a = document.getElementById("a");
+            var file = new Blob([text], {type: type});
+            a.href = URL.createObjectURL(file);
+            a.download = name;
+        };
+    </script>
+
+  </body>
+</html>
