@@ -49,4 +49,5 @@ Open a terminal, navigate to the folder containing the visualisation script that
 
     $ python -m SimpleHTTPServer 8910
 
+then head to [http://localhost:8910](http://localhost:8910)
 
