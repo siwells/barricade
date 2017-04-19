@@ -4,6 +4,8 @@ Some experiments using various JS based libraries to explore different ways to i
 v1 - JQuery & Arbor
 ===================
 
+
+![Screenshot of v1](screenshots/v1.png)
 An argument vizualisation widget that uses HTML 5 Canvas, JQuery, Jquery UI, Jquery Arbor, & JQuery SimpleModal. The aim is to provide beautiful online illustrations of argument structure to make clear the patterns of reasoning used in online argument and dialogue.
 
 This is a simple visualisation that includes nodes and edges with text labels for nodes. A modal is used to display information about indivdual nodes. Orange nodes depict schemes and grey nodes depict information.
