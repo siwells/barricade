@@ -181,11 +181,11 @@
             <div class="modal-body">
                 <p>Add some content to the new atom</p>
                  <div class="form-group">
-                    <textarea class="form-control" rows="2" id="new_atom_content"></textarea>
+                    <textarea class="form-control" rows="2" id="new_atom_content" autofocus></textarea>
                  </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="add_new_atom()">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="add_new_atom_node()">Close</button>
             </div>
           </div>
         </div>
@@ -379,7 +379,7 @@
     { 
     });
 
-    function add_new_atom()
+    function add_new_atom_node()
     {
         var new_content = document.getElementById("new_atom_content").value; 
         cy.add([
