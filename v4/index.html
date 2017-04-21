@@ -181,11 +181,11 @@
             <div class="modal-body">
                 <p>Add some content to the new atom</p>
                  <div class="form-group">
-                    <textarea class="form-control" rows="2" id="content"></textarea>
+                    <textarea class="form-control" rows="2" id="new_atom_content"></textarea>
                  </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="add_new_atom()">Close</button>
             </div>
           </div>
         </div>
@@ -331,14 +331,9 @@
     // 2 Finger Short Click
     cy.on('cxttap', function (e)
     { 
-        var rp = e.cyRenderedPosition
-        var new_content = prompt("Add some content for this node", "");
-
-        cy.add([
-            {group: "nodes", data: {id: Math.floor(Math.random() * 1024).toString(), 
-                content: new_content, typeshape: 'roundrectangle' }, renderedPosition: rp},
-        ]);
-
+        position = e.cyRenderedPosition;
+        document.getElementById("sel1").options.selectedIndex=0;
+        $('#newAtomModal').modal('show');
     });
 
     // 1 Finger Long Click
@@ -383,6 +378,15 @@
     $('.modal').on('hidden.bs.modal', function(e)
     { 
     });
+
+    function add_new_atom()
+    {
+        var new_content = document.getElementById("new_atom_content").value; 
+        cy.add([
+            {group: "nodes", data: {id: Math.floor(Math.random() * 1024).toString(), 
+                content: new_content, typeshape: 'roundrectangle' }, renderedPosition: position},
+        ]);
+    }
 
     function add_new_scheme_node()
     {
