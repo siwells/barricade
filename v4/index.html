@@ -218,7 +218,7 @@
 
 
     <script src="lib/slideout.js"></script>
-    <script src='lib/cytoscape.js'></script>
+    <script src='lib/cytoscape.min.js'></script>
     <script src="lib/jquery.min.js"></script>
     <script src="lib/bootstrap.min.js"></script>
     <script src="lib/mousetrap.min.js"></script>
@@ -261,11 +261,12 @@
 
 
         var options = {
-        name: 'cose',
-
-        fit: true,
-        padding: 30, 
-        boundingBox: undefined, 
+            name: 'circle',
+//            name: 'cose',
+            //name: 'dagre',
+            fit: true,
+            padding: 30, 
+            boundingBox: undefined
 //        sweep: undefined, 
 //        clockwise: true, 
 //        sort: undefined, 
@@ -276,9 +277,30 @@
 //        stop: undefined
 
      };
-
+    
     var cy = cytoscape({
     container: document.getElementById('cy'),
+    layout:{
+//        name: 'circle',
+//        name: 'cose',
+//        name: 'dagre',
+        name: 'grid',
+
+//        idealEdgeLength: 100,
+//        nodeOverlap: 20,
+//        fit: true,
+        padding: 20,
+//        boundingBox: undefined
+//        sweep: undefined, 
+//        clockwise: true, 
+//        sort: undefined, 
+//        animate: false, 
+//        animationDuration: 500, 
+//        animationEasing: undefined, 
+//        ready: undefined, 
+//        stop: undefined
+
+    },
     elements:[
     
         { data: { id: 'a1', content: 'Every person is going to die', type: 'atom', typeshape: 'roundrectangle' } },
@@ -322,7 +344,9 @@
             'broder-color':'#333'
             }
         }        
-        ]
+        ],
+        boxSelectionEnabled: false,
+        autounselectify: false
     });
 
     var selected = [];
@@ -373,7 +397,7 @@
     { 
     });
 
-    cy.layout( options);
+//    cy.layout( options);
 
     $('.modal').on('hidden.bs.modal', function(e)
     { 
