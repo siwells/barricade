@@ -4,12 +4,22 @@ var slideout;
 
 var selected = [];
 var position = null;
+var layout = null;
+var running = false;
+
+var cola_params = {
+    name: 'cola',
+    animate: true,
+    randomize: true,
+    maxSimulationTime: 1500
+};
 
 
 cy = cytoscape({
     container: document.getElementById('cy'),
-    elements:[
-    
+    ready: function(){},
+    elements:{
+        nodes: [
         { data: { id: 'a1', content: 'Every person is going to die', 
             type: 'atom', typeshape: 'roundrectangle' }, 
             classes: 'atom-label' },
@@ -30,7 +40,8 @@ cy = cytoscape({
             classes: 'scheme-label' },
         { data: { id: 's2', content: 'Default\nSupport', type: 'scheme', typeshape: 'diamond'  },
             classes: 'scheme-label'},
-
+        ],
+        edges: [
 
         { data: { id: 'a1s1', source: 'a1', target: 's1' } },
         { data: { id: 'a2s1', source: 'a2', target: 's1' } },
@@ -38,19 +49,16 @@ cy = cytoscape({
         { data: { id: 's2a5', source: 's2', target: 'a5' } },
         { data: { id: 's1a4', source: 's1', target: 'a4' } },
         { data: { id: 'a4s2', source: 'a4', target: 's2' } },
-
-        ],
+        ]
+        },
     style:[
         { selector: 'node', style: { 
             'content': 'data(content)', 
             'text-opacity': 0.8, 
             'width' : 'auto',
             'height' : 'auto',
-//            'text-valign': 'center', 
-//            'text-halign': 'center',
             'text-valign': 'bottom', 
             'text-halign': 'right',
-
             'shape':'data(typeshape)'
             }
         },
@@ -70,74 +78,33 @@ cy = cytoscape({
             selector: '.atom-label', style:{
                 'text-wrap': 'wrap',
                 'text-max-width': 80,
-//                'text-background-opacity': 0.5,
-//                'text-background-color': '#ccc',
-//                'text-background-shape': 'rectangle',
-//                'text-border-color': '#ccc',
- //               'text-border-width': 1,
-//                'text-border-opacity': 0.5
             }
         },
         {
             selector: '.scheme-label', style:{
                 'text-wrap': 'wrap',
-//                'text-max-width': 80,
-//                'text-background-opacity': 0.5,
-//                'text-background-color': '#ccc',
-//                'text-background-shape': 'rectangle',
-//                'text-border-color': '#ccc',
- //               'text-border-width': 1,
-//                'text-border-opacity': 0.5
             }
-        }
+        }                        
         ],
         boxSelectionEnabled: false,
         autounselectify: false,
         selectionType: 'single'
     });
-
-
-//
-    var params = {
-        name: 'cola',
-        animate: true,
-        randomize: true,
-        maxSimulationTime: 1500
-    };
-    var layout = makeLayout();
-    var running = false;
-
-    cy.on('layoutstart', function(){
-        console.log("STARTED");
-        running = true;
-    }).on('layoutstop', function(){
-        console.log("STARTED");
-        running = false;
-    });
   
+    layout = build_cola_layout();
     layout.run();
 
-    function makeLayout( opts )
-    {
-        for( var i in opts )
-        {
-            params[i] = opts[i];
-        }
-        
-        return cy.makeLayout( params );
-    }
-//
-
     cy.on('cxttap', function (e)
-    { 
-        position = e.cyRenderedPosition;
+    {
+        console.log(e);
+        position = e.renderedPosition;
         document.getElementById("sel1").options.selectedIndex=0;
         $('#newAtomModal').modal('show');
     });
 
     cy.on('taphold', function (e)
     { 
-        position = e.cyRenderedPosition;
+        position = e.renderedPosition;
         document.getElementById("sel1").options.selectedIndex=0;
         $('#newSchemeModal').modal('show');
     });
@@ -168,9 +135,15 @@ cy = cytoscape({
 
     cy.on('tap', 'node', function (e)
     { 
+    }); 
+
+    cy.on('layoutstart', function(){
+        running = true;
     });
-
-
+    
+    cy.on('layoutstop', function(){
+        running = false;
+    });
 
 /*
  *
@@ -226,12 +199,20 @@ cy = cytoscape({
         'tolerance': 70
     });
 
+    slideout.on('close', function() { cy.resize(); } );
+    slideout.on('open', function() { cy.resize(); } );
+
+/*
+ *
+ * Onload Query Selector Functions
+ *
+ * */
 
     window.onload = function() {
 
         document.querySelector('.toggle-button').addEventListener('click', function() {
-            slideout.toggle();
-            cy.resize();
+            if(slideout.isOpen()) { slideout.close(); }
+            else { slideout.open(); }
         });
 
         document.querySelector('.menu').addEventListener('click', function(eve) {
@@ -239,6 +220,23 @@ cy = cytoscape({
         });
         
     };
+
+/*
+ *
+ * Cola Layout Functions
+ *
+ *
+ * */
+
+function build_cola_layout( opts )
+{
+    for( var i in opts )
+    {
+        cola_params[i] = opts[i];
+    }
+        
+    return cy.makeLayout( cola_params );
+}
 
 
 /* 
@@ -276,4 +274,6 @@ mt.bind('t', function() {
  * */
 
 $('.modal').on('hidden.bs.modal', function(e) { });
+
+
 
