@@ -100,9 +100,15 @@ cy = cytoscape({
     layout = build_cola_layout();
     layout.run();
 
+   cy.edgehandles({
+	    toggleOffOnLeave: true,
+		handleNodes: "node",
+		handleSize: 10,
+		edgeType: function(){ return 'flat'; }
+	});
+
     cy.on('cxttap', function (e)
     {
-        console.log(e);
         position = e.renderedPosition;
         document.getElementById("sel1").options.selectedIndex=0;
         $('#newAtomModal').modal('show');
