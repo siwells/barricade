@@ -59,9 +59,13 @@ cy = cytoscape({
             'height' : 'auto',
             'text-valign': 'bottom', 
             'text-halign': 'right',
+            }
+        },
+        { selector: '[typeshape]', style: { 
             'shape':'data(typeshape)'
             }
         },
+
         { selector: 'edge', style: { 
             'line-color': '#9dbaea',
             'target-arrow-shape': 'triangle',
@@ -84,12 +88,14 @@ cy = cytoscape({
             selector: '.scheme-label', style:{
                 'text-wrap': 'wrap',
             }
-        }                        
+        }                    
         ],
         boxSelectionEnabled: false,
         autounselectify: false,
         selectionType: 'single'
     });
+
+
   
     layout = build_cola_layout();
     layout.run();
@@ -144,6 +150,8 @@ cy = cytoscape({
     cy.on('layoutstop', function(){
         running = false;
     });
+
+
 
 /*
  *
