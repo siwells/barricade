@@ -17,7 +17,7 @@ var cola_params = {
 
 cy = cytoscape({
     container: document.getElementById('cy'),
-    ready: function(){},
+    ready: function(){ window.cy = this; },
     elements:{
         nodes: [
         { data: { id: 'a1', content: 'Every person is going to die', 
@@ -100,12 +100,30 @@ cy = cytoscape({
     layout = build_cola_layout();
     layout.run();
 
+    cy.elements('node[type = "atom"]').qtip({
+        content: 'Metadata about this atom',
+        position: {
+            my: 'top center',
+            at: 'bottom center'
+        },
+        style: {
+            classes: 'qtip-bootstrap',
+            tip: {
+                width: 16,
+                height: 8
+            }
+        }
+    });
+
+
    cy.edgehandles({
 	    toggleOffOnLeave: true,
 		handleNodes: "node",
 		handleSize: 10,
 		edgeType: function(){ return 'flat'; }
 	});
+
+
 
     cy.on('cxttap', function (e)
     {
