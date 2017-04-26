@@ -239,7 +239,7 @@ cm = cy.contextMenus({
         $('#newSchemeModal').modal('show');
     });*/
 
-    cy.on('select', 'node', function (e)
+/*    cy.on('select', 'node', function (e)
     {
         selected.push(this.id());
         console.log(selected);
@@ -255,7 +255,7 @@ cm = cy.contextMenus({
             console.log(s2.selected());
             selected = [];
         }
-    });
+    });*/
 
     cy.on('unselect', 'node', function (e)
     {
