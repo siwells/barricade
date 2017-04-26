@@ -1,7 +1,7 @@
 var cy;
 var mt = Mousetrap();
 var slideout;
-
+var cm = null;
 var selected = [];
 var position = null;
 var layout = null;
@@ -131,9 +131,34 @@ cy = cytoscape({
  * Set up context menus
  *
  * */
-cy.contextMenus({
+cm = cy.contextMenus({
     menuItems: [
-    
+      {
+        id: 'remove',
+        title: 'remove',
+        selector: 'node, edge',
+        onClickFunction: function (event) {
+          var target = event.target || event.cyTarget;
+          removed = target.remove();
+          
+          cm.showMenuItem('undo-last-remove');
+        },
+        hasTrailingDivider: true
+      },
+      {
+        id: 'undo-last-remove',
+        title: 'undo last remove',
+        selector: 'node, edge',
+        show: false,
+        coreAsWell: true,
+        onClickFunction: function (event) {
+          if (removed) {
+            removed.restore();
+          }
+          cm.hideMenuItem('undo-last-remove');
+        },
+        hasTrailingDivider: true
+      },
       {
         id: 'add-atom',
         title: 'add atom',
