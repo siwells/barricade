@@ -405,6 +405,15 @@ mt.bind('t', function() {
  *
  * */
 
+$('#newAtomModal').on('shown.bs.modal', function () {
+    console.log("atom modal");
+    $('#new_atom_content').focus();
+});
+
+$('#newSchemeModal').on('shown.bs.modal', function () {
+    $('#sel1').focus();
+});
+
 $('.modal').on('hidden.bs.modal', function(e) { });
 
 
