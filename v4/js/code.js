@@ -136,7 +136,7 @@ cm = cy.contextMenus({
       {
         id: 'edit-content',
         title: 'edit content',
-        selector: 'node',
+        selector: 'node[type = "atom"]',
         onClickFunction: function (event) {
           var target = event.target || event.cyTarget;
           
@@ -146,7 +146,7 @@ cm = cy.contextMenus({
       {
         id: 'edit-metadata',
         title: 'edit metadata',
-        selector: 'node',
+        selector: 'node[type = "atom"]',
         onClickFunction: function (event) {
           var target = event.target || event.cyTarget;
           
@@ -156,7 +156,7 @@ cm = cy.contextMenus({
       {
         id: 'change-scheme',
         title: 'change scheme',
-        selector: 'edge',
+        selector: 'node[type = "scheme"]',
         onClickFunction: function (event) {
           var target = event.target || event.cyTarget;
           
