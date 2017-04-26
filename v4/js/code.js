@@ -134,6 +134,36 @@ cy = cytoscape({
 cm = cy.contextMenus({
     menuItems: [
       {
+        id: 'edit-content',
+        title: 'edit content',
+        selector: 'node',
+        onClickFunction: function (event) {
+          var target = event.target || event.cyTarget;
+          
+        },
+        hasTrailingDivider: false
+      },
+      {
+        id: 'edit-metadata',
+        title: 'edit metadata',
+        selector: 'node',
+        onClickFunction: function (event) {
+          var target = event.target || event.cyTarget;
+          
+        },
+        hasTrailingDivider: true
+      },
+      {
+        id: 'change-scheme',
+        title: 'change scheme',
+        selector: 'edge',
+        onClickFunction: function (event) {
+          var target = event.target || event.cyTarget;
+          
+        },
+        hasTrailingDivider: true
+      },
+      {
         id: 'remove',
         title: 'remove',
         selector: 'node, edge',
