@@ -410,11 +410,12 @@ $('#newAtomModal').on('shown.bs.modal', function () {
     $('#new_atom_content').focus();
 });
 
+$('#newAtomModal').on('hidden.bs.modal', function(e) { 
+    $('#new_atom_content').val('').end();    
+});
+
 $('#newSchemeModal').on('shown.bs.modal', function () {
     $('#sel1').focus();
 });
-
-$('.modal').on('hidden.bs.modal', function(e) { });
-
 
 
