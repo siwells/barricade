@@ -92,7 +92,10 @@ cy = cytoscape({
         ],
         boxSelectionEnabled: false,
         autounselectify: false,
-        selectionType: 'single'
+        selectionType: 'single',
+        minZoom: 0.5,
+        maxZoom: 2
+
     });
 
 
