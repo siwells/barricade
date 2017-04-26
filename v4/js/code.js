@@ -406,7 +406,6 @@ mt.bind('t', function() {
  * */
 
 $('#newAtomModal').on('shown.bs.modal', function () {
-    console.log("atom modal");
     $('#new_atom_content').focus();
 });
 
