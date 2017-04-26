@@ -123,21 +123,63 @@ cy = cytoscape({
 		edgeType: function(){ return 'flat'; }
 	});
 
+/*
+ *
+ * Set up context menus
+ *
+ * */
+cy.contextMenus({
+    menuItems: [
+    
+      {
+        id: 'add-atom',
+        title: 'add atom',
+        coreAsWell: true,
+        onClickFunction: function (event) {
+
+            position = event.position || event.cyPosition;
+            
+            document.getElementById("sel1").options.selectedIndex=0;
+            $('#newAtomModal').modal('show');
+        }
+      },
+      {
+        id: 'add-scheme',
+        title: 'add scheme',
+        coreAsWell: true,
+        onClickFunction: function (event) {
+
+            position = event.position || event.cyPosition;
+            
+            document.getElementById("sel1").options.selectedIndex=0;
+            $('#newSchemeModal').modal('show');
+        }
+      }
 
 
-    cy.on('cxttap', function (e)
+    ]
+});
+
+
+/*
+ *
+ * Handle mouse/touch interactions
+ *
+ * */
+
+/*    cy.on('cxttap', function (e)
     {
         position = e.renderedPosition;
         document.getElementById("sel1").options.selectedIndex=0;
         $('#newAtomModal').modal('show');
-    });
+    });*/
 
-    cy.on('taphold', function (e)
+/*    cy.on('taphold', function (e)
     { 
         position = e.renderedPosition;
         document.getElementById("sel1").options.selectedIndex=0;
         $('#newSchemeModal').modal('show');
-    });
+    });*/
 
     cy.on('select', 'node', function (e)
     {
