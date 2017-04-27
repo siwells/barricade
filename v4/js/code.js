@@ -211,8 +211,17 @@ cm = cy.contextMenus({
             
             document.getElementById("sel1").options.selectedIndex=0;
             $('#newSchemeModal').modal('show');
-        }
+        },
+        hasTrailingDivider: true
+      },
+      {
+        id: 'redraw',
+        title: 'redraw',
+        coreAsWell: true,
+        onClickFunction: function (event) { redraw_visualisation(); },
+        hasTrailingDivider: true
       }
+
 
 
     ]
@@ -312,6 +321,11 @@ cm = cy.contextMenus({
         var file = new Blob([text], {type: type});
         a.href = URL.createObjectURL(file);
         a.download = name;
+    };
+
+    function redraw_visualisation() {
+        layout.stop();
+        layout.run();
     };
 
 
