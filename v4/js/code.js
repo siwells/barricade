@@ -221,9 +221,6 @@ cm = cy.contextMenus({
         onClickFunction: function (event) { redraw_visualisation(); },
         hasTrailingDivider: true
       }
-
-
-
     ]
 });
 
