@@ -293,9 +293,10 @@ cm = cy.contextMenus({
         var new_content = document.getElementById("new_atom_content").value; 
         cy.add([
             {group: "nodes", data: {id: Math.floor(Math.random() * 1024).toString(), 
-                content: new_content, typeshape: 'roundrectangle' }, renderedPosition: position},
+                content: new_content, typeshape: 'roundrectangle' }, classes: 'atom-label', locked: false, renderedPosition: position},
         ]);
         redraw_visualisation();
+        console.log( cy.elements().jsons() );
     }
 
     function add_new_scheme_node() {
@@ -303,7 +304,7 @@ cm = cy.contextMenus({
         var scheme = document.getElementById("sel1").options[scheme_idx].text;
         cy.add([
             {group: "nodes", data: {id: Math.floor(Math.random() * 1024).toString(), 
-                content: scheme, typeshape: 'diamond' }, renderedPosition: position},
+                content: scheme, typeshape: 'diamond' }, classes: 'scheme-label', locked: false, renderedPosition: position},
         ]);
     };
 
