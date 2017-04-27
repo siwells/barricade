@@ -322,6 +322,7 @@ cm = cy.contextMenus({
 
     function redraw_visualisation() {
         layout.stop();
+        layout.options.eles = cy.elements();
         layout.run();
     };
 
