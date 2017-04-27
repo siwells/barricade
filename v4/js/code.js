@@ -295,8 +295,7 @@ cm = cy.contextMenus({
             {group: "nodes", data: {id: Math.floor(Math.random() * 1024).toString(), 
                 content: new_content, typeshape: 'roundrectangle' }, renderedPosition: position},
         ]);
-        layout.stop();
-        layout.run();
+        redraw_visualisation();
     }
 
     function add_new_scheme_node() {
